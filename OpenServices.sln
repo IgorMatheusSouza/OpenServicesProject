@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2036
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenServices", "OpenServices\OpenServices.csproj", "{D7D61481-C077-4156-B232-398C7A6C854B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D7D61481-C077-4156-B232-398C7A6C854B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D7D61481-C077-4156-B232-398C7A6C854B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D7D61481-C077-4156-B232-398C7A6C854B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D7D61481-C077-4156-B232-398C7A6C854B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9F5F320C-A73D-4DD6-B2EA-684EFDFA9963}
+	EndGlobalSection
+EndGlobal
