@@ -22,5 +22,14 @@ namespace OpenServices.Entities
 		public string Rg { get; set; }
 
 		public DateTime? DataNascimento { get; set; }
+
+
+        public bool validarNovoUsuario(out String msg, OpenServicesContext openServicesContext) {
+            msg = null;
+            if (openServicesContext.Usuarios.Any(x => x.Cpf == this.Cpf))
+                msg = "Usuário já cadastrado";
+
+            return msg == null;
+        }
 	}
 }

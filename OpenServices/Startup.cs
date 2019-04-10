@@ -23,10 +23,14 @@ namespace OpenServices
 		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services)
 		{
-			services.AddMvc();
-			var connection = @"Server=PKBOOK;Database=Openservices;Trusted_Connection=True;ConnectRetryCount=0";
-			services.AddDbContext<OpenServicesContext>
-				(options => options.UseSqlServer(connection));
+            services.AddTransient<OpenServicesContext, OpenServicesContext>();
+
+            var connection = @"Server=progweb02;Database=OpenServices;Trusted_Connection=True;ConnectRetryCount=0";
+            services.AddDbContext<OpenServicesContext>
+                (options => options.UseSqlServer(connection));
+
+            services.AddMvc();
+	
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
