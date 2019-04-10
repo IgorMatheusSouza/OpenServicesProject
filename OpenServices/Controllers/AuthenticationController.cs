@@ -17,9 +17,15 @@ namespace OpenServices.Controllers
 		[HttpPost]
 		public JsonResult CadastrarUsuario(Usuario usuario) {
 
-			OpenServicesContext.Add(usuario);
-			OpenServicesContext.SaveChanges();
-			return null;
+            try
+            {
+                OpenServicesContext.Usuarios.Add(usuario);
+                OpenServicesContext.SaveChanges();
+                return Json("Usuário cadastrado");
+            }
+            catch (Exception) {
+                return Json("Erro ao cadastrar usuário");
+            }
 		}
     }
 }
