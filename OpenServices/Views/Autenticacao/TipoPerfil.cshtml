@@ -7,17 +7,28 @@
     <hr class="my-4">
     <p class="lead text-center">
         <a class="btn btn-primary text-center" href="#" role="button" onclick="exibirCadastroPrestador()">Me cadastrar como prestador de serviço</a>
-        <a class="btn btn-outline-warning text-center" href="#" role="button">Buscar por prestadores de Serviço</a>
+        <a class="btn btn-outline-warning text-center" asp-controller="Home" asp-action="Index" role="button">Buscar por prestadores de Serviço</a>
     </p>
 </div>
 
 <div id="cadastro-prestador" style="display:none">
-    <h4 style="margin-top:30px">Cadastrar Perfil Prestador</h4>
+    <h4 style="margin-top:30px">Cadastrar perfil prestador de serviço</h4>
     <hr />
     <div class="row">
         <div class="col-md-4">
             <form asp-action="TipoPerfil">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label class="control-label">Categoria de serviço</label>
+                    <select class="form-control" asp-for="CategoriaSelecionada">
+                        @foreach (var item in Model.Categorias)
+                        {
+                            <option value="@item.IdCategoria">@item.Nome</option>
+                        }
+
+                    </select>
+                </div>
+                <input asp-for="IdUsuario" class="form-control d-none" value="@Model.IdUsuario" />
+                <div class="text-danger"></div>
                 <div class="form-group">
                     <label asp-for="Cnpj" class="control-label"></label>
                     <input asp-for="Cnpj" class="form-control" />
@@ -27,16 +38,6 @@
                     <label asp-for="Especializacao" class="control-label"></label>
                     <textarea asp-for="Especializacao" class="form-control" rows="5"></textarea>
                     <span asp-validation-for="Especializacao" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label  class="control-label">Categoria de serviço</label>
-                    <select class="form-control" asp-for="CategoriaSelecionada">
-                        @foreach (var item in Model.Categorias)
-                        {
-                            <option value="@item.IdCategoria">@item.Nome</option>
-                        }
-
-                    </select>
                 </div>
                 <div class="form-group">
                     <input type="submit" class="btn btn-primary" value="Cadastrar" />

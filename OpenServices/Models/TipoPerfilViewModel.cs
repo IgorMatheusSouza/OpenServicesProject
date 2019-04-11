@@ -8,6 +8,10 @@ namespace OpenServices.Models
 {
     public class TipoPerfilViewModel
     {
+        public TipoPerfilViewModel()
+        {
+
+        }
         public TipoPerfilViewModel(int idUsuario)
         {
             IdUsuario = idUsuario;
