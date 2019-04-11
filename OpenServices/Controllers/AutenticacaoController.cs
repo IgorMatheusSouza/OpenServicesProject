@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using OpenServices.Entities;
 using OpenServices.Models;
+using System.Linq;
 
 namespace OpenServices.Controllers
 {
@@ -33,33 +34,32 @@ namespace OpenServices.Controllers
             {
                 OpenServicesContext.Usuarios.Add(usuario);
                 OpenServicesContext.SaveChanges();
-                return RedirectToAction("TipoPefil", new { id = usuario.IdUsuario });
+                return RedirectToAction("TipoPerfil", new { id = usuario.IdUsuario });
             }
             else
                 return View(msg);
-
         }
 
-        public ActionResult TipoPefil(int IdUsuario)
+        [HttpGet]
+        [Route("Autenticacao/TipoPerfil/{IdUsuario}")]
+        public ActionResult TipoPerfil(int IdUsuario)
         {
-            return View(new TipoPerfilViewModel(IdUsuario));
+            var tipoPerfil = new TipoPerfilViewModel(IdUsuario);
+            tipoPerfil.Categorias = OpenServicesContext.Categorias.ToList();
+            tipoPerfil.Usuario = OpenServicesContext.Usuarios.FirstOrDefault(x => x.IdUsuario == IdUsuario);
+            return View(tipoPerfil);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult TipoPefil(TipoPerfilViewModel tipoPerfil)
+        public ActionResult TipoPerfil(TipoPerfilViewModel tipoPerfil)
         {
-            var msg = string.Empty;
-            if (tipoPerfil.IsPrestadorServico)
-            {
-                var usuario = (PrestadorServico)OpenServicesContext.Usuarios.Find(tipoPerfil.IdUsuario);
-                usuario.Cnpj = tipoPerfil.Cnpj;
-                usuario.Especializacao = tipoPerfil.Especializacao;
-                return View();
-            }
-            else
-                return View(msg);
-
+            var usuario = (PrestadorServico)OpenServicesContext.Usuarios.Find(tipoPerfil.IdUsuario);
+            usuario.Cnpj = tipoPerfil.Cnpj;
+            usuario.Especializacao = tipoPerfil.Especializacao;
+            usuario.Categorias.Add(new CategoriaPrestador { IdCategoria = tipoPerfil.CategoriaSelecionada });
+            OpenServicesContext.SaveChanges();
+            return View();
         }
     }
 }
