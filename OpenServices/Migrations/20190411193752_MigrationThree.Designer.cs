@@ -12,9 +12,10 @@ using System;
 namespace OpenServices.Migrations
 {
     [DbContext(typeof(OpenServicesContext))]
-    partial class OpenServicesContextModelSnapshot : ModelSnapshot
+    [Migration("20190411193752_MigrationThree")]
+    partial class MigrationThree
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

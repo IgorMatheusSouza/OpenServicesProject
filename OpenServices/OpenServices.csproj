@@ -7,6 +7,8 @@
   <ItemGroup>
     <Compile Remove="Migrations\20190408004519_migrationOne.cs" />
     <Compile Remove="Migrations\20190408004519_migrationOne.Designer.cs" />
+    <Compile Remove="Migrations\20190411170846_herança.cs" />
+    <Compile Remove="Migrations\20190411170846_herança.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

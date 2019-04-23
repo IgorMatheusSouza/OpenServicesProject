@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using OpenServices.Entities;
 using OpenServices.Models;
+using System;
 using System.Linq;
 
 namespace OpenServices.Controllers
@@ -36,8 +37,7 @@ namespace OpenServices.Controllers
                 OpenServicesContext.SaveChanges();
                 return RedirectToAction("TipoPerfil", new { id = usuario.IdUsuario });
             }
-            else
-                return View(msg);
+            return View(msg);
         }
 
         [HttpGet]
@@ -54,12 +54,62 @@ namespace OpenServices.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult TipoPerfil(TipoPerfilViewModel tipoPerfil)
         {
-            var usuario = (PrestadorServico)OpenServicesContext.Usuarios.Find(tipoPerfil.IdUsuario);
-            usuario.Cnpj = tipoPerfil.Cnpj;
-            usuario.Especializacao = tipoPerfil.Especializacao;
-            usuario.Categorias.Add(new CategoriaPrestador { IdCategoria = tipoPerfil.CategoriaSelecionada });
+            var usuario = OpenServicesContext.Usuarios.Find(tipoPerfil.IdUsuario);
+
+            var prestador = this.TransformarUsuario(usuario);
+            prestador.Cnpj = tipoPerfil.Cnpj;
+            prestador.Especializacao = tipoPerfil.Especializacao;
+            prestador.Categorias.Add(new CategoriaPrestador { IdCategoria = tipoPerfil.CategoriaSelecionada });
+            OpenServicesContext.PrestadorServicos.Add(prestador);
             OpenServicesContext.SaveChanges();
-            return View();
+
+            return RedirectToAction("TipoPagamento", new { id = prestador.IdUsuario });
+        }
+
+        [HttpGet]
+        [Route("Autenticacao/TipoPagamento/{IdUsuario}")]
+        public ActionResult TipoPagamento(int IdUsuario)
+        {
+            var tipoPagamento = new TipoPagamentoViewModel(IdUsuario);
+            tipoPagamento.NomeUsuario = OpenServicesContext.PrestadorServicos.FirstOrDefault(x => x.IdUsuario == IdUsuario).Nome;
+            return View(tipoPagamento);
+        }
+
+        [HttpPost]
+        [Route("Autenticacao/TipoPagamento/{IdUsuario}")]
+        public ActionResult TipoPagamento(TipoPagamentoViewModel tipoPagamentoView)
+        {
+
+            var prestador = OpenServicesContext.PrestadorServicos.FirstOrDefault(x => x.IdUsuario == tipoPagamentoView.IdUsuario);
+
+            if (tipoPagamentoView.PermiteCartaoCredito)
+                prestador.FormaPagamentos.Add(new FormaPagamento { Tipo = EnumTipoPagamento.CartaoCredito });
+
+            if (tipoPagamentoView.PermiteCartaoDebito)
+                prestador.FormaPagamentos.Add(new FormaPagamento { Tipo = EnumTipoPagamento.CartaoDebito });
+
+            if (tipoPagamentoView.PermiteDinheiro)
+                prestador.FormaPagamentos.Add(new FormaPagamento { Tipo = EnumTipoPagamento.Dinheiro });
+
+            OpenServicesContext.SaveChanges();
+
+            return RedirectToAction("Index", "Home");
+        }
+
+        private PrestadorServico TransformarUsuario(Usuario usuario)
+        {
+            var prestador = new PrestadorServico
+            {
+                Nome = usuario.Nome,
+                Cpf = usuario.Cpf,
+                Senha = usuario.Senha,
+                Email = usuario.Email,
+                Rg = usuario.Rg,
+                DataNascimento = usuario.DataNascimento
+
+            };
+            OpenServicesContext.Usuarios.Remove(usuario);
+            return prestador;
         }
     }
 }

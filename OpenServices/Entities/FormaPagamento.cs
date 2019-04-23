@@ -10,6 +10,6 @@ namespace OpenServices.Entities
 	{
 		[Key]
 		public int IdFormaPagamento { get; set; }
-		public string Tipo { get; set; }
+		public EnumTipoPagamento Tipo { get; set; }
 	}
 }

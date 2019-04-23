@@ -1,0 +1,32 @@
+﻿@model TipoPagamentoViewModel
+
+<h4 style="margin-top:30px">@Model.NomeUsuario, escolha quais formas de pagamento você aceita quando os usuários contratarem seus serviços</h4>
+<hr />
+<form asp-action="TipoPagamento">
+    <div class="form-group">
+        <div class="custom-control custom-checkbox">
+            <input class="custom-control-input" id="customCheck1" asp-for="@Model.PermiteDinheiro">
+            <label class="custom-control-label" for="customCheck1">Dinheiro</label>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="custom-control custom-checkbox">
+            <input class="custom-control-input" id="customCheck2" asp-for="@Model.PermiteCartaoDebito">
+            <label class="custom-control-label" for="customCheck2">Cartão de débito</label>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="custom-control custom-checkbox">
+            <input class="custom-control-input" id="customCheck3" asp-for="@Model.PermiteCartaoCredito">
+            <label class="custom-control-label" for="customCheck3">Cartao de credito</label>
+        </div>
+    </div>
+    <br />
+    <br />
+
+    <div class="form-group">
+        <input type="submit" value="Salvar" class="btn btn-primary" />
+    </div>
+</form>
