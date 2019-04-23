@@ -9,13 +9,14 @@ using OpenServices.Entities;
 namespace OpenServices.Controllers
 {
 	[Produces("application/json")]
-	[Route("api/Authentication")]
+	
 	public class AuthenticationController : Controller
 	{
 		public OpenServicesContext OpenServicesContext { get; set; }
 
-		[HttpPost]
-		public JsonResult CadastrarUsuario(Usuario usuario) {
+        [Route("api/CadastrarUsuario")]
+        [HttpPost]
+		public JsonResult CadastrarUsuario([FromBody]Usuario usuario) {
 
             try
             {
@@ -27,5 +28,22 @@ namespace OpenServices.Controllers
                 return Json("Erro ao cadastrar usuário");
             }
 		}
+
+        [Route("api/GetUsuario")]
+        [HttpGet]
+        public JsonResult GetUsuario(Usuario usuario)
+        {
+
+            try
+            {
+                OpenServicesContext.Usuarios.Add(usuario);
+                OpenServicesContext.SaveChanges();
+                return Json("Usuário cadastrado");
+            }
+            catch (Exception)
+            {
+                return Json("Erro ao cadastrar usuário");
+            }
+        }
     }
 }
