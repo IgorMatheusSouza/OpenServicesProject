@@ -21,6 +21,25 @@ namespace OpenServices.Controllers
             return View();
         }
 
+        public ActionResult RecuperarSenha()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Login(Usuario usuario)
+        {
+            if(usuario.Email.Contains("igor"))
+                return RedirectToAction("Solicitar", "Servico", usuario);
+
+            if (usuario.Email.Contains("matheus"))
+                return RedirectToAction("SolicitacaoServico", "PrestadorServico", usuario);
+
+
+            return View();
+        }
+
+
         public ActionResult Cadastro()
         {
             return View();

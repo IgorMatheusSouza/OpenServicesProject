@@ -1,0 +1,37 @@
+﻿@model OpenServices.Entities.Usuario
+
+@{
+    ViewData["Title"] = "Solicitar";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<span style="float:right"> @Model.Email | <a asp-controller="Autenticacao" asp-action="Login">sair</a> </span>
+
+<h2 style="margin-top:30px">Solicitar serviço</h2>
+
+<iframe src="https://www.google.com/maps/embed?pb=!1m21!1m12!1m3!1d10851.79201669669!2d-43.174885427104606!3d-22.949288331783247!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m6!3e2!4m3!3m2!1d-22.954625999999998!2d-43.1681035!4m0!5e0!3m2!1spt-BR!2sbr!4v1558102405729!5m2!1spt-BR!2sbr" width="1000" height="500" frameborder="0" style="border:0" allowfullscreen></iframe>
+
+<div class="col-md-6 col-md-offset-3" style="margin-bottom:100px">
+    <form asp-action="Solicitar" class="form-signin">
+        <div class="form-container">
+            <div class="label-float">
+                <label>Descrição</label>
+                <input type="text" class="form-control" required id="slo" value=" " />
+            </div>
+            <br />
+            <div class="label-float-select">
+                <label>Categoria</label>
+                <select class="form-control" type="text" required>
+                    <option>Hidráulica</option>
+                    <option>Pintura</option>
+                    <option>Serviços domésticos</option>
+                    <option>Babá</option>
+                    <option>Diarista</option>
+                </select>
+            </div>
+            <br />
+            <br />
+            <button class="btn btn-primary" type="submit">Solicitar serviço</button>
+
+        </div>
+    </form>
+</div>

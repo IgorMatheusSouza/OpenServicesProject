@@ -1,0 +1,53 @@
+﻿@model OpenServices.Entities.Usuario
+
+@{
+    ViewData["Title"] = "BuscarPrestador";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<span style="float:right"> @Model.Email | <a asp-controller="Autenticacao" asp-action="Login">sair</a> </span>
+<br />
+<br />
+<h3 class="text-center">Profissionais que atendem esse serviço</h3>
+
+
+<div class="card" style="width: 18rem;">
+    <div class="card-body">
+        <h5 class="card-title">Matheus moreira</h5>
+        <h6 class="card-subtitle mb-2 text-muted">Hidráulica</h6>
+        <p class="card-text">trabalha com serviços de hidraulica</p>
+
+    </div>
+</div>
+<br />
+
+<div class="card" style="width: 18rem;">
+    <div class="card-body">
+        <h5 class="card-title">Gabriel oliveira Santos</h5>
+        <h6 class="card-subtitle mb-2 text-muted">Hidráulica</h6>
+        <p class="card-text">Conserto de canos e serviços de Hidráulica em geral</p>
+    </div>
+</div>
+<br />
+<div class="card" style="width: 18rem;">
+    <div class="card-body">
+        <h5 class="card-title">Renata Alves</h5>
+        <h6 class="card-subtitle mb-2 text-muted">hidraulica</h6>
+        <p class="card-text">Testando descrição de serviço sbdjuasb</p>
+    </div>
+</div>
+
+<h3 class="text-center text-danger">Agurde até que alguém aceite a solicitação de serviço</h3>
+
+<script>
+
+    function buscarResposta() {
+        var resposta = localStorage.getItem('servico');
+        if ('aceito' == resposta) {
+            localStorage.removeItem('servico');
+            window.location.href = "http://localhost:54777/Servico/confirmarPrestador";
+        }
+    };
+
+    setInterval(buscarResposta, 10000)
+
+</script>
