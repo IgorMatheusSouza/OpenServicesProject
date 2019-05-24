@@ -43,11 +43,13 @@
     function buscarResposta() {
         var resposta = localStorage.getItem('servico');
         if ('aceito' == resposta) {
-            localStorage.removeItem('servico');
-            window.location.href = "http://localhost:54777/Servico/confirmarPrestador";
+            setInterval(function () {
+                localStorage.removeItem('servico');
+                window.location.href = "http://localhost:54777/Servico/confirmarPrestador";
+            }, 4000)
         }
     };
 
-    setInterval(buscarResposta, 10000)
+    setInterval(buscarResposta, 4000)
 
 </script>

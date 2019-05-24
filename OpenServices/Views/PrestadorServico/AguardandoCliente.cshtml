@@ -1,11 +1,12 @@
 ﻿
 @{
-    ViewData["Title"] = "Servico";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
+
 <span style="float:right"> @Model.Email | <a asp-controller="Autenticacao" asp-action="Login">sair</a> </span>
 
-<h2 class="text-center">Solicitações de serviços disponíveis para você</h2>
+<h2 class="text-center">Você está negociando serviço com os seguintes clientes:</h2>
 <br />
 <br />
 <br />
@@ -13,22 +14,12 @@
 
 <div class="card" style="width: 25rem;">
     <div class="card-body">
-        <h5 class="card-title">Igor Matheus</h5>
+        <h3 class="card-title">Igor Matheus</h3>
         <h6 class="card-subtitle mb-2 text-muted">Hidráulica</h6>
         <h6 class="card-subtitle mb-2 text-muted">Av. Pasteur, 458 - Botafogo, Rio de Janeiro - RJ</h6>
         <h6 class="card-subtitle mb-2 text-muted">Nota usuário: 8</h6>
         <p class="card-text">O cano da cozinha quebrou</p>
-        <button class="btn btn-success" onclick="salvarAceitacao()"> Aceitar </button>
-        <button class="btn btn-danger"> Recusar </button>
+        <button class="btn btn-info btn-block"> Enviar mensagem </button>
+
     </div>
 </div>
-
-
-<script>
-
-    function salvarAceitacao() {
-        localStorage.setItem('servico', 'aceito');
-        window.location.href = "http://localhost:54777/PrestadorServico/aguardandocliente";
-    }
-
-</script>

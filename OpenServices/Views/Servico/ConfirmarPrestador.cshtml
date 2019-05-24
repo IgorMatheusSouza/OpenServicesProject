@@ -1,9 +1,13 @@
-﻿
+﻿@model OpenServices.Entities.Usuario
+
 @{
     ViewData["Title"] = "ConfirmarPrestador";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<span style="float:right"> @Model.Email | <a asp-controller="Autenticacao" asp-action="Login">sair</a> </span>
+<br />
+<br />
 <h2 class="text-center">Deseja confirmar o seguinte prestador de serviço</h2>
 <br />
 <br />
@@ -20,9 +24,24 @@
         <br />
         <br />
 
-        <button class="btn btn-success" onclick="salvarAceitacao()"> Aceitar </button>
-        <button class="btn btn-danger"> Recusar </button>
+        <div id="buttons">
+            <button class="btn btn-success" onclick="salvarAceitacao()"> Aceitar </button>
+            <button class="btn btn-danger"> Recusar </button>
+        </div>
+
+        <div id="txt" class="hide" style="display:none">
+            <h5 class="text-success">Prestador confirmado</h5>
+        </div>
 
     </div>
 </div>
 
+<script>
+
+    $('#txt').hide()
+    function salvarAceitacao() {
+        $('#buttons').hide()
+        $('#txt').show()
+    }
+
+</script>

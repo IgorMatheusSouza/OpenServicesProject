@@ -9,8 +9,10 @@ namespace OpenServices.Controllers
 {
     public class PrestadorServicoController : Controller
     {
+        private static Usuario usuarioLogado;
         public IActionResult SolicitacaoServico(Usuario usuario)
         {
+            usuarioLogado = usuario;
             return View(usuario);
         }
 
@@ -19,5 +21,12 @@ namespace OpenServices.Controllers
         {
             return View();
         }
+
+
+        public IActionResult AguardandoCliente()
+        {
+            return View(usuarioLogado);
+        }
+        
     }
 }
