@@ -1,4 +1,4 @@
-﻿@model OpenServices.Entities.Usuario
+﻿@model OpenServices.Models.BuscarPrestadosViewModel
 
 @{
     ViewData["Title"] = "BuscarPrestador";
@@ -10,31 +10,21 @@
 <h3 class="text-center">Profissionais que atendem esse serviço</h3>
 
 
-<div class="card" style="width: 18rem;">
-    <div class="card-body">
-        <h5 class="card-title">Matheus moreira</h5>
-        <h6 class="card-subtitle mb-2 text-muted">Hidráulica</h6>
-        <p class="card-text">trabalha com serviços de hidraulica</p>
+@foreach (var item in Model.Usuarios)
+{
+    <div class="card" style="width: 18rem;">
+        <div class="card-body">
+            <h5 class="card-title">@item.Nome</h5>
+            <h6 class="card-subtitle mb-2 text-muted">@Model.Categoria</h6>
+            <p class="card-text">trabalha com serviços de @Model.Categoria</p>
 
+        </div>
     </div>
-</div>
-<br />
+    <br />
+}
 
-<div class="card" style="width: 18rem;">
-    <div class="card-body">
-        <h5 class="card-title">Gabriel oliveira Santos</h5>
-        <h6 class="card-subtitle mb-2 text-muted">Hidráulica</h6>
-        <p class="card-text">Conserto de canos e serviços de Hidráulica em geral</p>
-    </div>
-</div>
 <br />
-<div class="card" style="width: 18rem;">
-    <div class="card-body">
-        <h5 class="card-title">Renata Alves</h5>
-        <h6 class="card-subtitle mb-2 text-muted">hidraulica</h6>
-        <p class="card-text">Testando descrição de serviço sbdjuasb</p>
-    </div>
-</div>
+<br />
 
 <h3 class="text-center text-danger">Agurde até que alguém aceite a solicitação de serviço</h3>
 

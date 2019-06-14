@@ -1,0 +1,21 @@
+﻿@model OpenServices.Entities.Usuario
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<span style="float:right"> @Model.Email | <a asp-controller="Autenticacao" asp-action="Login">sair</a> </span>
+<br />
+<br />
+<img class="col-md-6 offset-md-3"  src="~/images/logo.png"/>
+<br />
+<br />
+<br />
+
+
+<nav class="nav flex-column">
+    <a class="nav-link active" asp-action="Solicitar" asp-route-email="@Model.Email" >Solicitar serviço</a>
+    <a class="nav-link"  asp-action="BuscarPrestador" >Servicos</a>
+    <a class="nav-link" href="#">Sobre</a>
+    <a class="nav-link" href="#">Meu cadastro</a>
+</nav>

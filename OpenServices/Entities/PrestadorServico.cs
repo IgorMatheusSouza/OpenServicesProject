@@ -10,13 +10,26 @@ namespace OpenServices.Entities
 	{
 		public PrestadorServico()
 		{
-			Categorias = new HashSet<CategoriaPrestador>();
+            CategoriasPrestador = new HashSet<CategoriaPrestador>();
 			FormaPagamentos = new HashSet<FormaPagamento>();
-		}
+            Categorias = new List<Categoria>();
+        }
 
 		public string Cnpj { get; set; }
 		public string Especializacao { get; set; }
-		public ICollection<CategoriaPrestador> Categorias { get; set; }
+		public ICollection<CategoriaPrestador> CategoriasPrestador { get; set; }
 		public ICollection<FormaPagamento> FormaPagamentos { get; set; }
-	}
+
+        public ICollection<Categoria> Categorias { get; set; }
+
+        public List<Categoria> SelecionarCategorias()
+        {
+            return Categorias.ToList();
+        }
+
+        public Categoria SelecionarCategorias(string nome)
+        {
+            return Categorias.FirstOrDefault(x=> x.Nome == nome);
+        }
+    }
 }

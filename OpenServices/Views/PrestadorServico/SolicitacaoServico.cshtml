@@ -1,10 +1,12 @@
-﻿
+﻿@model SolicitacaoServicoViewModel
+
 @{
     ViewData["Title"] = "Servico";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <span style="float:right"> @Model.Email | <a asp-controller="Autenticacao" asp-action="Login">sair</a> </span>
-
+<br />
+<br />
 <h2 class="text-center">Solicitações de serviços disponíveis para você</h2>
 <br />
 <br />
@@ -13,11 +15,11 @@
 
 <div class="card" style="width: 25rem;">
     <div class="card-body">
-        <h5 class="card-title">Igor Matheus</h5>
-        <h6 class="card-subtitle mb-2 text-muted">Hidráulica</h6>
+        <h5 class="card-title">@Model.Servico.Cliente.Nome</h5>
+        <h6 class="card-subtitle mb-2 text-muted">@Model.Servico.Categoria.Nome</h6>
         <h6 class="card-subtitle mb-2 text-muted">Av. Pasteur, 458 - Botafogo, Rio de Janeiro - RJ</h6>
         <h6 class="card-subtitle mb-2 text-muted">Nota usuário: 8</h6>
-        <p class="card-text">O cano da cozinha quebrou</p>
+        <p class="card-text">@Model.Servico.Descricao</p>
         <button class="btn btn-success" onclick="salvarAceitacao()"> Aceitar </button>
         <button class="btn btn-danger"> Recusar </button>
     </div>

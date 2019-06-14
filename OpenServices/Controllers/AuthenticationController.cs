@@ -41,8 +41,9 @@ namespace OpenServices.Controllers
 
         [Route("api/recuperarSenha")]
         [HttpPost]
-        public JsonResult RecuperarSenha([FromBody] string email)
+        public JsonResult RecuperarSenha([FromBody] Usuario userEmail)
         {
+            var email = userEmail.Email;
             var user = OpenServicesContext.Usuarios.FirstOrDefault(x => x.Email.Contains(email));
             if (user == null)
                 return Json(false);
@@ -79,17 +80,17 @@ namespace OpenServices.Controllers
 
         [Route("api/realizarLogin")]
         [HttpPost]
-        public JsonResult RealizarLogin(Usuario credenciasLogin)
+        public JsonResult RealizarLogin([FromBody]Usuario credenciasLogin)
         {
             var user = OpenServicesContext.Usuarios.FirstOrDefault(x => x.Email.Contains(credenciasLogin.Email) && x.Senha.Contains(credenciasLogin.Senha));
-            return user != null ? Json(user.IdUsuario) : null;
+            return user != null ? Json(user.IdUsuario) : Json(null);
         }
 
-        [Route("api/getUsuario")]
+        [Route("api/getUsuario/{idUser}")]
         [HttpGet]
-        public JsonResult GetUsuario(int IdUser)
+        public JsonResult GetUsuario(int idUser)
         {
-            return Json(OpenServicesContext.Usuarios.Find(IdUser));
+            return Json(OpenServicesContext.Usuarios.Find(idUser));
         }
     }
 }

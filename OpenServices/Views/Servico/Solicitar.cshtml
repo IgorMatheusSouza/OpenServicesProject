@@ -1,4 +1,4 @@
-﻿@model OpenServices.Entities.Usuario
+﻿@model OpenServices.Models.SolicitarServicoModel
 
 @{
     ViewData["Title"] = "Solicitar";
@@ -12,15 +12,16 @@
 
 <div class="col-md-6 col-md-offset-3" style="margin-bottom:100px">
     <form asp-action="Solicitar" class="form-signin">
+        <input asp-for="Email" type="text" class="form-control hide" required id="slo" value="@Model.Email"  style="display:none" />
         <div class="form-container">
             <div class="label-float">
                 <label>Descrição</label>
-                <input type="text" class="form-control" required id="slo" value=" " />
+                <input asp-for="Descricao" type="text" class="form-control" required id="slo" value=" " />
             </div>
             <br />
             <div class="label-float-select">
                 <label>Categoria</label>
-                <select class="form-control" type="text" required>
+                <select asp-for="NomeCategoria" class="form-control" type="text" required>
                     <option>Hidráulica</option>
                     <option>Pintura</option>
                     <option>Serviços domésticos</option>

@@ -1,0 +1,125 @@
+﻿@model OpenServices.Models.ChatViewModel
+
+@{
+    ViewData["Title"] = "Servico";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+
+
+    /* Chat containers */
+    .container-d {
+        border: 2px solid #dedede;
+        background-color: #f1f1f1;
+        border-radius: 5px;
+        padding: 10px;
+        margin: 10px 0;
+    }
+
+    /* Darker chat container */
+    .darker {
+        border-color: #ccc;
+        background-color: #ddd;
+    }
+
+    /* Clear floats */
+    .container-d::after {
+        content: "";
+        clear: both;
+        display: table;
+    }
+
+    /* Style images */
+    .container-d img {
+        float: left;
+        max-width: 60px;
+        width: 100%;
+        margin-right: 20px;
+        border-radius: 50%;
+    }
+
+        /* Style the right image */
+        .container-d img.right {
+            float: right;
+            margin-left: 20px;
+            margin-right: 0;
+        }
+
+    /* Style time text */
+    .time-right {
+        float: right;
+        color: #aaa;
+    }
+
+    /* Style time text */
+    .time-left {
+        float: left;
+        color: #999;
+    }
+</style>
+
+
+<script>
+    function obterMensagens() {
+        $.ajax({
+            url: "http://localhost:54777/mensagem/GetMensagem",
+            success: function (resp) {
+                if (resp) {
+                    var html = "";
+                    var nomePrimeiro = resp[0].nome;
+                    for (var i = 0; i < resp.length; i++) {
+                        if (resp[i].nome == nomePrimeiro) {
+                            html += "<div class='container-d darker'> <p>" +resp[i].nome + ": "+ resp[i].texto + " </p> <span class='time-left'>" + resp[i].data + "</span> </div>";
+                        }
+                        else {
+                            html += "<div class='container-d'> <p>" +resp[i].nome + ": "+ resp[i].texto + " </p> <span class='time-right'>" + resp[i].data + "</span> </div>";
+                        }
+                    }
+
+                    $('#chat').html(html);
+                }
+            }
+        });
+    }
+
+    setInterval(obterMensagens, 2000);
+
+    function enviarMensagem() {
+        var mensagem = $('#msg').val();
+        $.ajax({
+            type: "POST",
+            contentType: 'application/json',
+            data: JSON.stringify({ msg: mensagem , Id: $('#iduser').val() }),
+            url: "http://localhost:54777/mensagem/EnviarMensagem",
+            success: function (resp) {
+
+            }
+        });
+    }
+
+</script>
+
+<span style="float:right"> @Model.UsuarioLogado.Email | <a asp-controller="Autenticacao" asp-action="Login">sair</a> </span>
+<br />
+<br />
+<h3 class="text-center"> conversa de  @Model.Prestador.Nome com @Model.Cliente.Nome</h3>
+<br />
+<br />
+<input style="display:none" value="@Model.UsuarioLogado.IdUsuario" id="iduser"/> 
+<div class="col-md-8" style="width:50%;margin-left:20%;">
+
+    <div id="chat">
+        <div class="container-d darker">
+            <p class="text-center">Envie algo</p>
+        </div>
+    </div>
+
+    <div class="label-float">
+        <input type="text" class="form-control" required id="msg" value=" " />
+    </div>
+    <br />
+    <br />
+    <button class="btn btn-primary" onclick="enviarMensagem()">Enviar</button>
+</div>
+

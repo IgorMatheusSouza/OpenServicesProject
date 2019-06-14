@@ -15,22 +15,22 @@
 
 <div class="card" style="width: 25rem;">
     <div class="card-body">
-        <h5 class="card-title">Matheus moreira</h5>
+        <h5><a asp-action="DadosPrestador" asp-controller="PrestadorServico" asp-route-id="7" class="card-title">Matheus moreira</a></h5>
         <h6 class="card-subtitle mb-2 text-muted">Hidráulica</h6>
         <p class="card-text">trabalha com serviços de hidraulica</p>
         <h6 class="card-subtitle mb-2 text-muted">Nota usuário: 9</h6>
 
-        <button class="btn btn-info btn-block"> Enviar mensagem </button>
+        <a class="btn btn-info btn-block" asp-action="Chat">Enviar mensagem </a>
         <br />
         <br />
 
         <div id="buttons">
-            <button class="btn btn-success" onclick="salvarAceitacao()"> Aceitar </button>
-            <button class="btn btn-danger"> Recusar </button>
+
+            <button class="btn btn-danger btn-block" onclick="Cancelar()"> Cancelar </button>
         </div>
 
         <div id="txt" class="hide" style="display:none">
-            <h5 class="text-success">Prestador confirmado</h5>
+            <h5 class="text-danger text-center">Cancelado</h5>
         </div>
 
     </div>
@@ -39,9 +39,15 @@
 <script>
 
     $('#txt').hide()
-    function salvarAceitacao() {
-        $('#buttons').hide()
-        $('#txt').show()
-    }
+    function Cancelar() {
+        $.ajax({
+            url: "http://localhost:54777/servico/cancelar",
+            success: function (resp) {
+                $('#buttons').hide()
+                $('#txt').show();
+            }
+        })
+    };
+
 
 </script>

@@ -26,8 +26,9 @@ namespace OpenServices
 		public void ConfigureServices(IServiceCollection services)
 		{
             services.AddTransient<OpenServicesContext, OpenServicesContext>();
-
-            var connection = @"Server=progweb02;Database=OpenServices;Trusted_Connection=True;ConnectRetryCount=0";
+            services.AddTransient<OpenServicesContextData, OpenServicesContextData>();
+            
+            var connection = @"Server=DESKTOP-E83SVL6;Database=OpenServices;Trusted_Connection=True;ConnectRetryCount=0";
             services.AddDbContext<OpenServicesContext>
                 (options => options.UseSqlServer(connection));
             services.AddCors(options =>

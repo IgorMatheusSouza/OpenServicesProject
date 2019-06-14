@@ -9,9 +9,9 @@ namespace OpenServices.Controllers
 {
     public class AutenticacaoController : Controller
     {
-        private readonly OpenServicesContext OpenServicesContext;
+        private readonly OpenServicesContextData OpenServicesContext;
 
-        public AutenticacaoController(OpenServicesContext openServicesContext)
+        public AutenticacaoController(OpenServicesContextData openServicesContext)
         {
             OpenServicesContext = openServicesContext;
         }
@@ -29,17 +29,18 @@ namespace OpenServices.Controllers
         [HttpPost]
         public ActionResult Login(Usuario usuario)
         {
-            if(usuario.Email.Contains("igor"))
-                return RedirectToAction("Solicitar", "Servico", usuario);
+            var usuarioLog = OpenServicesContext.Usuarios.FirstOrDefault(x => x.Email == usuario.Email && x.Senha == usuario.Senha);
 
-            if (usuario.Email.Contains("matheus"))
+            if (usuarioLog != null && usuarioLog.GetType() == typeof(PrestadorServico))
                 return RedirectToAction("SolicitacaoServico", "PrestadorServico", usuario);
 
+            if (usuarioLog != null)
+                return RedirectToAction("LogadoCliente", "Servico", usuario);
 
             return View();
         }
 
-        
+
         public ActionResult Cadastro()
         {
             return View();
@@ -50,13 +51,10 @@ namespace OpenServices.Controllers
         public ActionResult Cadastro(Usuario usuario)
         {
             var msg = string.Empty;
-            if (usuario.validarNovoUsuario(out msg, OpenServicesContext))
-            {
-                OpenServicesContext.Usuarios.Add(usuario);
-                OpenServicesContext.SaveChanges();
-                return RedirectToAction("TipoPerfil", new { id = usuario.IdUsuario });
-            }
-            return View(msg);
+
+            OpenServicesContext.Usuarios.Add(usuario);
+            return RedirectToAction("TipoPerfil", new { id = usuario.IdUsuario });
+
         }
 
         [HttpGet]
@@ -73,14 +71,13 @@ namespace OpenServices.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult TipoPerfil(TipoPerfilViewModel tipoPerfil)
         {
-            var usuario = OpenServicesContext.Usuarios.Find(tipoPerfil.IdUsuario);
+            var usuario = OpenServicesContext.Usuarios.FirstOrDefault(x => x.IdUsuario == tipoPerfil.IdUsuario);
 
             var prestador = this.TransformarUsuario(usuario);
             prestador.Cnpj = tipoPerfil.Cnpj;
             prestador.Especializacao = tipoPerfil.Especializacao;
-            prestador.Categorias.Add(new CategoriaPrestador { IdCategoria = tipoPerfil.CategoriaSelecionada });
+            prestador.CategoriasPrestador.Add(new CategoriaPrestador { IdCategoria = tipoPerfil.CategoriaSelecionada });
             OpenServicesContext.PrestadorServicos.Add(prestador);
-            OpenServicesContext.SaveChanges();
 
             return RedirectToAction("TipoPagamento", new { id = prestador.IdUsuario });
         }
@@ -109,8 +106,6 @@ namespace OpenServices.Controllers
 
             if (tipoPagamentoView.PermiteDinheiro)
                 prestador.FormaPagamentos.Add(new FormaPagamento { Tipo = EnumTipoPagamento.Dinheiro });
-
-            OpenServicesContext.SaveChanges();
 
             return RedirectToAction("Index", "Home");
         }
