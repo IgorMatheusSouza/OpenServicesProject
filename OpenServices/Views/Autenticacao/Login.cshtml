@@ -1,5 +1,45 @@
 ﻿@model OpenServices.Entities.Usuario
 
+<style>
+    .abcRioButton {
+        margin:auto!important;
+    }
+
+</style>
+<script>
+
+    var signOutVerified = false;
+
+    function signOut() {
+
+        var auth2 = gapi.auth2.getAuthInstance();
+        auth2.signOut().then(function () {
+            console.log('User signed out.');
+        });
+        signOutVerified = true;
+    }
+
+    function onSignIn(googleUser) {
+        var profile = googleUser.getBasicProfile();
+
+        var email = profile.getEmail();
+        console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+        console.log('Name: ' + profile.getName());
+        console.log('Image URL: ' + profile.getImageUrl());
+        console.log('Email: ' + email); // This is null if the 'email' scope is not present.
+
+        if (signOutVerified) {
+            $('#inputEmail').val(email);
+            $('#inputPassword').val("123456");
+            $('#entrar').click();
+        }
+         signOutVerified = true;
+    }
+
+    setTimeout(function () { $('#deslogar').click() }, 40);
+
+</script>
+
 <div class="container">
     <div class="row">
         <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
@@ -18,13 +58,15 @@
                         </div>
                         <div class="d-block text-center">
                             <a asp-controller="Autenticacao" asp-action="RecuperarSenha" class="card-title text-center btn-link">Recuperar senha</a>
-
                         </div>
 
 
                         <br />
+                        <div class="">
+                            <div class="g-signin2 text-center" data-onsuccess="onSignIn"></div>
+                        </div>
                         <br />
-                        <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Entrar</button>
+                        <button id="entrar" class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Entrar</button>
                         <br />
                         <a class="btn btn-lg btn-primary btn-block text-uppercase " asp-controller="Autenticacao" asp-action="Cadastro">Cadastrar</a>
                         <hr class="my-4">
@@ -34,3 +76,5 @@
         </div>
     </div>
 </div>
+
+<a class="hide" style="display:none" href="#" id="deslogar" onclick="signOut();">Sign out</a>

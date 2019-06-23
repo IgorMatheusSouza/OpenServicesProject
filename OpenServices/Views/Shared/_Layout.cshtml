@@ -15,8 +15,12 @@
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
         <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
     </environment>
+    <meta name="google-signin-client_id" content="413549776934-34v679ghj5t0vihbl7bashi4anvdrhpa.apps.googleusercontent.com">
+   
 </head>
 <body>
+
+
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
         <div class="container">
             <a class="navbar-brand" href="#">OpenServices</a>
@@ -45,9 +49,9 @@
     </nav>
     <div class="container body-content">
         @RenderBody()
-      
-    </div>
 
+    </div>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
     <environment include="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>

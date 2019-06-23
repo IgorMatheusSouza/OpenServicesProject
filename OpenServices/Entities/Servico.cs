@@ -15,9 +15,10 @@ namespace OpenServices.Entities
 
         public string Status { get; set; }
 
+        public List<Avaliacao> Avaliacoes = new List<Avaliacao>();
 
         public Servico Cadastrar(String descricao, Categoria categoria , Cliente cliente) {
-            return new Servico { Descricao = descricao, Cliente = cliente, Categoria = categoria };
+            return new Servico { Descricao = descricao, Cliente = cliente, Categoria = categoria, Status = "andamento" };
         }
 
         public void Cancelar()

@@ -1,0 +1,37 @@
+﻿@model OpenServices.Models.HistoricoServicoModel
+
+@{
+    ViewData["Title"] = "BuscarPrestador";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<span style="float:right"> @Model.Usuario.Email | <a asp-controller="Autenticacao" asp-action="Login">sair</a> </span>
+<br />
+<br />
+<h3 class="text-center">Hitórico de serviços</h3>
+
+
+@foreach (var item in Model.Servicos)
+{
+    <div class="card" style="width: 35rem;">
+        <div class="card-body">
+            <h4 class="card-title text-primary">Cliente: @item.Cliente.Nome</h4>
+            <h5 class="card-title">Descrição do serviço: @item.Descricao</h5>
+            <h6 class="card-subtitle mb-2 text-muted">Categoria: @item.Categoria.Nome</h6>
+            <br />
+            <h4 class="card-subtitle mb-2 text-muted">Status do serviço: @item.Status</h4>
+            <hr />
+            <h4 class="text-primary font-weight-bold">Avaliações</h4>
+            @foreach (var avaliacao in @item.Avaliacoes)
+            {
+
+                <h5 class="card-title">@avaliacao.Usuario.Email</h5>
+                <h5 class="card-title">@avaliacao.Nota</h5>
+                <h6 class="card-subtitle mb-2 text-muted">@avaliacao.Descricao</h6>
+            }
+        </div>
+    </div>
+    <br />
+}
+
+<br />
+<br />

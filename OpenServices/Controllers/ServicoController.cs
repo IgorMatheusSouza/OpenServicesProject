@@ -66,5 +66,28 @@ namespace OpenServices.Controllers
             OpenServicesContext.Servicos.RemoveAll(x=> true);
             return Json(null);
         }
+
+        public IActionResult Avaliar()
+        {
+            return View(new AvaliacaoViewModel { usuario = usuarioLogado });
+        }
+
+        [HttpPost]
+        public IActionResult Avaliar(AvaliacaoViewModel avaliacaoViewModel)
+        {
+            var servico = OpenServicesContext.Servicos.FirstOrDefault();
+            servico.Status = "Finalizado";
+
+            var avaliacao = new Avaliacao { Descricao = avaliacaoViewModel.Descricao, Nota = avaliacaoViewModel.Nota, Servico = servico, Data = DateTime.Now, Usuario = usuarioLogado };
+            OpenServicesContext.Avaliacoes.Add(avaliacao);
+            servico.Avaliacoes.Add(avaliacao);
+            return RedirectToAction("LogadoCliente", usuarioLogado);
+        }
+
+        public IActionResult HistoricoServicos()
+        {
+            var servicos = OpenServicesContext.Servicos.Where(x => x.Cliente.Email == usuarioLogado.Email).ToList();
+            return View(new HistoricoServicoModel { Usuario = usuarioLogado , Servicos = servicos});
+        }
     }
 }

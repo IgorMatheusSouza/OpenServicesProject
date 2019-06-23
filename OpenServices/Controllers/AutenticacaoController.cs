@@ -77,7 +77,7 @@ namespace OpenServices.Controllers
             prestador.Cnpj = tipoPerfil.Cnpj;
             prestador.Especializacao = tipoPerfil.Especializacao;
             prestador.CategoriasPrestador.Add(new CategoriaPrestador { IdCategoria = tipoPerfil.CategoriaSelecionada });
-            OpenServicesContext.PrestadorServicos.Add(prestador);
+            OpenServicesContext.Usuarios.Add(prestador);
 
             return RedirectToAction("TipoPagamento", new { id = prestador.IdUsuario });
         }
@@ -87,7 +87,7 @@ namespace OpenServices.Controllers
         public ActionResult TipoPagamento(int IdUsuario)
         {
             var tipoPagamento = new TipoPagamentoViewModel(IdUsuario);
-            tipoPagamento.NomeUsuario = OpenServicesContext.PrestadorServicos.FirstOrDefault(x => x.IdUsuario == IdUsuario).Nome;
+            tipoPagamento.NomeUsuario = OpenServicesContext.Usuarios.FirstOrDefault(x => x.IdUsuario == IdUsuario).Nome;
             return View(tipoPagamento);
         }
 

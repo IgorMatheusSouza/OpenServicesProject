@@ -62,5 +62,30 @@ namespace OpenServices.Controllers
             var prestador = (PrestadorServico)OpenServicesContext.Usuarios.FirstOrDefault(x => x.IdUsuario == id);
             return View(prestador);
         }
+
+        public IActionResult Avaliar()
+        {
+            return View(new AvaliacaoViewModel { usuario = usuarioLogado });
+        }
+
+        [HttpPost]
+        public IActionResult Avaliar(AvaliacaoViewModel avaliacaoViewModel)
+        {
+            var servico = OpenServicesContext.Servicos.FirstOrDefault();
+            if(servico != null)
+                servico.Status = "Finalizado";
+
+            var avaliacao = new Avaliacao { Descricao = avaliacaoViewModel.Descricao, Nota = avaliacaoViewModel.Nota, Servico = servico , Data = DateTime.Now, Usuario = usuarioLogado };
+            OpenServicesContext.Avaliacoes.Add(avaliacao);
+            servico.Avaliacoes.Add(avaliacao); 
+
+            return RedirectToAction("LogadoPrestador");
+        }
+
+        public IActionResult HistoricoServicos()
+        {
+            var servicos = OpenServicesContext.Servicos.ToList();
+            return View(new HistoricoServicoModel { Usuario = usuarioLogado, Servicos = servicos });
+        }
     }
 }

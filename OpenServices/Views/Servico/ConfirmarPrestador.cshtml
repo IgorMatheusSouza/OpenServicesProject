@@ -13,7 +13,7 @@
 <br />
 <br />
 
-<div class="card" style="width: 25rem;">
+<div class="card" style="width:25rem;">
     <div class="card-body">
         <h5><a asp-action="DadosPrestador" asp-controller="PrestadorServico" asp-route-id="7" class="card-title">Matheus moreira</a></h5>
         <h6 class="card-subtitle mb-2 text-muted">Hidráulica</h6>
@@ -22,17 +22,20 @@
 
         <a class="btn btn-info btn-block" asp-action="Chat">Enviar mensagem </a>
         <br />
-        <br />
 
         <div id="buttons">
 
             <button class="btn btn-danger btn-block" onclick="Cancelar()"> Cancelar </button>
         </div>
 
+        <br />
+        <div>
+            <a class="btn btn-primary btn-block" asp-action="Avaliar">Finalizar e avaliar</a>
+        </div>
+
         <div id="txt" class="hide" style="display:none">
             <h5 class="text-danger text-center">Cancelado</h5>
         </div>
-
     </div>
 </div>
 

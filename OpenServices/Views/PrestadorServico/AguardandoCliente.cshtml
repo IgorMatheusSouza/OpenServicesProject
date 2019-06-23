@@ -22,10 +22,13 @@
         <p class="card-text">@Model.Servico.Descricao</p>
         <a class="btn btn-info btn-block" asp-action="Chat">Enviar mensagem </a>
         <br />
-        <br />
         <div id="buttons">
 
             <button class="btn btn-danger btn-block" onclick="Cancelar()"> Cancelar </button>
+        </div>
+        <br />
+        <div>
+            <a class="btn btn-primary btn-block" asp-action="Avaliar">Finalizar e avaliar</a>
         </div>
 
         <div id="txt" class="hide" style="display:none">

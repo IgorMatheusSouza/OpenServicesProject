@@ -13,21 +13,21 @@ using OpenServices.Entities;
 
 namespace OpenServices
 {
-	public class Startup
-	{
-		public Startup(IConfiguration configuration)
-		{
-			Configuration = configuration;
-		}
+    public class Startup
+    {
+        public Startup(IConfiguration configuration)
+        {
+            Configuration = configuration;
+        }
 
-		public IConfiguration Configuration { get; }
+        public IConfiguration Configuration { get; }
 
-		// This method gets called by the runtime. Use this method to add services to the container.
-		public void ConfigureServices(IServiceCollection services)
-		{
+        // This method gets called by the runtime. Use this method to add services to the container.
+        public void ConfigureServices(IServiceCollection services)
+        {
             services.AddTransient<OpenServicesContext, OpenServicesContext>();
             services.AddTransient<OpenServicesContextData, OpenServicesContextData>();
-            
+
             var connection = @"Server=DESKTOP-E83SVL6;Database=OpenServices;Trusted_Connection=True;ConnectRetryCount=0";
             services.AddDbContext<OpenServicesContext>
                 (options => options.UseSqlServer(connection));
@@ -35,6 +35,11 @@ namespace OpenServices
             {
                 options.AddPolicy("AllowMyOrigin",
                 builder => builder.WithOrigins("http://localhost:4200"));
+            });
+            services.AddAuthentication().AddGoogle(options =>
+            {
+                options.ClientId = "413549776934-34v679ghj5t0vihbl7bashi4anvdrhpa.apps.googleusercontent.com";
+                options.ClientSecret = "L7_QpbwcyAKoBmVViFj4eczt";
             });
             services.AddMvc();
             services.Configure<MvcOptions>(options =>
@@ -44,28 +49,28 @@ namespace OpenServices
 
         }
 
-		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-		public void Configure(IApplicationBuilder app, IHostingEnvironment env)
-		{
-			if (env.IsDevelopment())
-			{
-				app.UseBrowserLink();
-				app.UseDeveloperExceptionPage();
-			}
-			else
-			{
-				app.UseExceptionHandler("/Home/Error");
-			}
+        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        {
+            if (env.IsDevelopment())
+            {
+                app.UseBrowserLink();
+                app.UseDeveloperExceptionPage();
+            }
+            else
+            {
+                app.UseExceptionHandler("/Home/Error");
+            }
 
-			app.UseStaticFiles();
+            app.UseStaticFiles();
             app.UseCors("AllowMyOrigin");
 
             app.UseMvc(routes =>
-			{
-				routes.MapRoute(
-					name: "default",
-					template: "{controller=Home}/{action=Index}/{id?}");
-			});
-		}
-	}
+            {
+                routes.MapRoute(
+                    name: "default",
+                    template: "{controller=Home}/{action=Index}/{id?}");
+            });
+        }
+    }
 }

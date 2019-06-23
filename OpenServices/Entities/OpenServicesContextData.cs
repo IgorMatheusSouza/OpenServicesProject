@@ -15,6 +15,8 @@ namespace OpenServices.Entities
         public List<FormaPagamento> FormaPagamentos { get; set; }
         public List<CategoriaPrestador> CategoriaPrestadors { get; set; }
 
+        public List<Avaliacao> Avaliacoes = AvaliacaoData;
+
         public List<Mensagem> Mensagems = MensagemsData;
 
         public List<Servico> Servicos = ServicoData;
@@ -25,7 +27,9 @@ namespace OpenServices.Entities
 
         private static List<Servico> ServicoData = new List<Servico>();
 
-        private static List<Mensagem> MensagemsData = new List<Mensagem> ();
+        private static List<Mensagem> MensagemsData = new List<Mensagem>();
+
+        public static List<Avaliacao> AvaliacaoData = new List<Avaliacao>();
 
     }
 }
